@@ -1,0 +1,12 @@
+市面上同类的产品服务:
+The Oxford Text Checker https://www.oxfordlearnersdictionaries.com/us/oxford_3000_profiler.html
+
+[Single Words]
+Oxford standard: 3000, 5000; Academic (Written, Spoken)
+CEFR level: ABC (A1-2, B1-2, C1-2)
+Part of speech: n., v., adv., adj.
+
+[Phrases]
+
+x000, cefr_level, word, part_of_speech
+单词的不同词性可能属于不同的CEFR等级, 比如age n. A1, v. B1

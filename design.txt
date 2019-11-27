@@ -51,5 +51,10 @@ light (from the sun/a lamp) n.,
 
 我首先拿page2来做实验，它刚好是280行，我先实验下
 
+导入json数据
+1. 利用FileReader, 但是需要用户手动选择文件
+2. 利用Ajax但是需要服务器, 不能本地
+3. 可以专门用变量呀, https://stackoverflow.com/questions/19706046/how-to-read-an-external-local-json-file-in-javascript
+
 [后续打算加入更多统计结果]
 词频统计，基本单词构成多少百分比

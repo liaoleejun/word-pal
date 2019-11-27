@@ -21,3 +21,13 @@ button {
 button:hover {
     opacity: 1
 }
+
+
+.note {
+    font-size: 80%;
+    color: #aaa;
+}
+
+a {
+    color: #aaa;
+}

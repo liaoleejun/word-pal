@@ -7,20 +7,61 @@
 </head>
 <body>
 <div class="main">
-    <h2>选择级别</h2>
-    <div>
-        <label for="">
-            <select name="" id="">
-                <option value="">3000</option>
-                <option value="">5000</option>
-            </select>
-        </label>
-    </div>
+    <h1>英语听力和口语刻意训练</h1>
 
-    <h2>粘贴听力脚本</h2>
-    <label for="input"><textarea name="input" id="input" rows="10"></textarea></label><br>
+    <h2>1. 粘贴听力脚本</h2>
+    <label for="input"><textarea name="input" id="input" rows="10"></textarea></label>
+    <div class="note">注：随便粘贴任何英文文字, 比如 <a href="https://fangj.github.io/friends/season/0101.html">Monica Gets A Roommate</a></div>
 
-    <h2>Are you ready?</h2>
+    <h2>2. 选择单词等级</h2>
+    <table>
+        <tr>
+            <td style="vertical-align:top">
+                <div id="oxford">
+                    <div>
+                        <input type="radio" id="oxford_3000" name="level" value="oxford_3000" checked>
+                        <label for="oxford_3000">Oxford 3000</label>
+                    </div>
+
+                    <div>
+                        <input type="radio" id="oxford_5000" name="level" value="oxford_5000">
+                        <label for="oxford_5000">Oxford 5000</label>
+                    </div>
+                </div>
+            </td>
+            <td style="vertical-align:top; padding-left: 20px; padding-right: 20px; padding-top: 12px">或者</td>
+            <td>
+                <div id="cefr">
+                    <div>
+                        <input type="radio" id="cefr_a1" name="level" value="oxford_3000">
+                        <label for="cefr_a1">CEFR A1</label>
+                    </div>
+
+                    <div>
+                        <input type="radio" id="cefr-a2" name="level" value="oxford_5000">
+                        <label for="cefr-a2">CEFR A2</label>
+                    </div>
+
+                    <div>
+                        <input type="radio" id="cefr-b1" name="level" value="oxford_5000">
+                        <label for="cefr-b1">CEFR B1</label>
+                    </div>
+
+                    <div>
+                        <input type="radio" id="cefr-b2" name="level" value="oxford_5000">
+                        <label for="cefr-b2">CEFR B2</label>
+                    </div>
+
+                    <div>
+                        <input type="radio" id="cefr-c1" name="level" value="oxford_5000">
+                        <label for="cefr-c1">CEFR C1</label>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="note">注：<a href="#">什么是Oxford 3000/5000, 什么是CEFR等级标准</a></div>
+    <h2>3. Are you ready?</h2>
     <button>Start</button>
 </div>
 </body>

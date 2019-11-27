@@ -1,0 +1,10 @@
+body {
+    max-width: 800px;
+    margin: 16px auto;
+    border: 1px solid #E0E0E0;
+    padding: 16px;
+}
+
+textarea {
+    width: 80%;
+}

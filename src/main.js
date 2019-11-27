@@ -1,9 +1,11 @@
 // 百度统计
 // Google Analytics
+
 document.getElementById("start").addEventListener("click", function(){
     let level = getRadioValueByName("level");
+    let wordList = {};
     for (let i = 0; i < data.length; i++) {
-
+        wordList[data[i].word] = null;
     }
 });
 

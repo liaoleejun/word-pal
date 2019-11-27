@@ -8,3 +8,16 @@ body {
 textarea {
     width: 80%;
 }
+
+button {
+    background-color: green;
+    color: white;
+    font-size: 110%;
+    padding: auto 6px;
+    border-radius: 5%;
+    opacity: 0.8;
+}
+
+button:hover {
+    opacity: 1
+}

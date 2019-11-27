@@ -27,13 +27,13 @@ oxford_level, cefr_level, word, part_of_speech
 
 [数据设计方案二]
 1. 整理出 Oxford 3000, 5000 数据，包含 word, part_of_speech, oxford_std, cefr_std，组成json文件
-2. 如何分词包括去除标点符号的影响
-3. 比如要获取cefr_a1的数据, 递归循环根据cefr_a1值创建一个cefr_a1的全局对象每次需要时都先去查看这个是否为null:
+2. 比如要获取cefr_a1的数据, 递归循环根据cefr_a1值创建一个cefr_a1的全局对象每次需要时都先去查看这个是否为null:
     cefr_a1 = {
         "a": null,
         "abandon": null,
         ...
     }
+3. 如何分词包括去除标点符号的影响
 4. 循环分词来匹配并过程中统计数据并生成输出的结果即红色字体标注"新词"
 
 采用方案二

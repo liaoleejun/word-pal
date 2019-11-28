@@ -66,7 +66,11 @@ short-term
 so-called
 怎么处理，正则替换 ^([a-zA-Z-])(.*)$ 替换为 "word": "$1", "description": "$2"
 
-
+6) second在A1中算了两次，还紧挨着
+second1 (next after the first) det./
+ number
+second1 (unit of time) n
+(导入到WebStorm中会自动检测重复项)
 
 数据上有一个问题，用户选择了5000的话，3000也是要包含的，用户选择了b1，那么a1、a2也要包含呀，看来通过枚举的方式容易出错不优雅，得通过字符组成变量了
 

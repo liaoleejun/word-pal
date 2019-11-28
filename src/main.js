@@ -2,20 +2,6 @@
 // Google Analytics
 
 document.getElementById("start").addEventListener("click", function(){
-    /*
-     * Get word list of the specified level
-     * 找到radio所指定的登记的字典
-     */
-    let std_level = getRadioValueByName("std_level");
-    let std = std_level.split("_")[0];
-    let level = std_level.split("_")[1];
-    let wordList = {};
-    for (let i = 0; i < data.length; i++) {
-        if (data[i][std] === level) {
-            wordList[data[i].word] = true;
-        }
-    }
-
     let result = document.createElement("div");
     result.id = "result";
     document.body.appendChild(result);
@@ -58,7 +44,7 @@ document.getElementById("start").addEventListener("click", function(){
                 if (x.match(/[a-z]/i)) {
                     // TODO 1. data.js完全小写化 2. wordList[x.toLowerCase()]
                     // TODO 去除字母长度为1或2, 因为去除a, an
-                    if (wordList[x]) {
+                    if (matchWordList(x)) {
                         let t = document.createTextNode(x);
                         result.appendChild(t);
                     } else {
@@ -83,4 +69,33 @@ function getRadioValueByName(name) {
             return(radios[i].value);
         }
     }
+}
+
+function matchWordList(x) {
+    // 找到radio所指定的单词列表等级 ["3000", "5000", "a1", "a2", "b1", "b2", "c1"]
+    let level = getRadioValueByName("std_level").split("_")[1];
+    let arr = [];
+    if (level === "3000") {
+        arr = [a1_3000, a2_3000, b1_3000, b2_3000];
+    } else if (level === "5000") {
+        arr = [a1_3000, a2_3000, b1_3000, b2_3000, b2_5000, c1_5000];
+    } else if (level === "a1") {
+        arr = [a1_3000];
+    } else if (level === "a2") {
+        arr = [a1_3000, a2_3000];
+    } else if (level === "b1") {
+        arr = [a1_3000, a2_3000, b1_3000];
+    } else if (level === "b2") {
+        arr = [a1_3000, a2_3000, b1_3000, b2_3000, b2_5000];
+    } else {
+        arr = [a1_3000, a2_3000, b1_3000, b2_3000, b2_5000, c1_5000];
+    }
+
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i].hasOwnProperty(x)) {
+            return true
+        }
+    }
+
+    return false;
 }

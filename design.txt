@@ -72,6 +72,11 @@ second1 (next after the first) det./
 second1 (unit of time) n
 (TODO 导入到WebStorm中会自动检测重复项, 暂未处理)
 
+TODO 添加words to be ignored
+
+TODO 3000或5000的名词的复数形式, 动词的除原型外的四种形式: Past form, Past participle form, s / es/ ies, ‘ing’ form
+https://www.worldclasslearning.com/english/five-verb-forms.html
+
 数据上有一个问题，用户选择了5000的话，3000也是要包含的，用户选择了b1，那么a1、a2也要包含呀，看来通过枚举的方式容易出错不优雅，得通过字符组成变量了
 
 导入json数据

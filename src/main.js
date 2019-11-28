@@ -57,6 +57,7 @@ document.getElementById("start").addEventListener("click", function(){
                  */
                 if (x.match(/[a-z]/i)) {
                     // TODO 1. data.js完全小写化 2. wordList[x.toLowerCase()]
+                    // TODO 去除字母长度为1或2, 因为去除a, an
                     if (wordList[x]) {
                         let t = document.createTextNode(x);
                         result.appendChild(t);

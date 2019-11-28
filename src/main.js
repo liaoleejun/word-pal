@@ -92,7 +92,7 @@ function matchWordList(x) {
     }
 
     for (let i = 0; i < arr.length; i++) {
-        if (arr[i].hasOwnProperty(x)) {
+        if (arr[i].hasOwnProperty(x.toLowerCase())) {
             return true
         }
     }

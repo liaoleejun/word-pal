@@ -35,3 +35,8 @@ a {
 #result > span {
     color: red;
 }
+
+#unmatched {
+    background-color: #E0E0E0;
+    margin: 10px auto;
+}

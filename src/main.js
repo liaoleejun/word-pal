@@ -8,7 +8,6 @@ document.getElementById("start").addEventListener("click", function(){
     }
     result = document.createElement("div");
     result.id = "result";
-    document.body.appendChild(result);
 
     /*
      * text ---换行\n--->
@@ -23,6 +22,7 @@ document.getElementById("start").addEventListener("click", function(){
     let text = document.getElementById("input").value;
     if (!text.trim()) {return;}
     let lines = text.match(/([\n]+)|([^\n]+)/g);
+    let unmatched = {};
     for (let line of lines) {
         if (line.match(/\n/i)) {
             for (let i = 0; i < line.match(/\n/g).length; i++) {
@@ -44,10 +44,10 @@ document.getElementById("start").addEventListener("click", function(){
             for (let x of word) {
                 /*
                  * 匹配
+                 * x.length > 2是为了去除字母长度为1或2, 因为去除a, an
                  */
-                if (x.match(/[a-z]/i)) {
+                if (x.match(/[a-z]/i) && x.length > 2) {
                     // TODO 1. data.js完全小写化 2. wordList[x.toLowerCase()]
-                    // TODO 去除字母长度为1或2, 因为去除a, an
                     if (matchWordList(x)) {
                         let t = document.createTextNode(x);
                         result.appendChild(t);
@@ -55,6 +55,11 @@ document.getElementById("start").addEventListener("click", function(){
                         let span = document.createElement("span");
                         span.innerText = x;
                         result.appendChild(span);
+                        if (unmatched.hasOwnProperty(x)) {
+                            unmatched[x] = unmatched[x] + 1;
+                        } else {
+                            unmatched[x] = 1;
+                        }
                     }
                 } else {
                     let t = document.createTextNode(x);
@@ -63,6 +68,18 @@ document.getElementById("start").addEventListener("click", function(){
             }
         }
     }
+
+    let div = document.getElementById("unmatched");
+    if (div) {
+        div.parentNode.removeChild(div);
+    }
+    div = document.createElement("div");
+    div.id = "unmatched";
+    div.innerHTML = Object.keys(unmatched).sort().join(", ");
+
+    document.body.appendChild(div);
+    document.body.appendChild(result);
+
 });
 
 // https://stackoverflow.com/questions/9618504/how-to-get-the-selected-radio-button-s-value

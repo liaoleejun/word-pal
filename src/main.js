@@ -2,7 +2,11 @@
 // Google Analytics
 
 document.getElementById("start").addEventListener("click", function(){
-    let result = document.createElement("div");
+    let result = document.getElementById("result");
+    if (result) {
+        result.parentNode.removeChild(result);
+    }
+    result = document.createElement("div");
     result.id = "result";
     document.body.appendChild(result);
 

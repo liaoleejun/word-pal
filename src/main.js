@@ -56,6 +56,7 @@ document.getElementById("start").addEventListener("click", function(){
                  * 匹配
                  */
                 if (x.match(/[a-z]/i)) {
+                    // TODO 1. data.js完全小写化 2. wordList[x.toLowerCase()]
                     if (wordList[x]) {
                         let t = document.createTextNode(x);
                         result.appendChild(t);

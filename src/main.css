@@ -37,6 +37,6 @@ a {
     margin: 10px auto;
 }
 
-#contrast > span {
+#contrast > span.not-in-list {
     color: red;
 }

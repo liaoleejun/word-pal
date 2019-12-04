@@ -100,6 +100,7 @@ let wordlist = [
     {"word": "ambitious", "level": "oxford_3000"},
     {"word": "among", "level": "oxford_3000"},
     {"word": "amount", "level": "oxford_3000"},
+    {"word": "an", "level": "oxford_3000"},
     {"word": "analyse", "level": "oxford_3000"},
     {"word": "analysis", "level": "oxford_3000"},
     {"word": "ancient", "level": "oxford_3000"},

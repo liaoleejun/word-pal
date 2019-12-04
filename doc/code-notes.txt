@@ -8,3 +8,15 @@ function addMultiple(data) {
         let request = tx.objectStore(objStore).add(value);
     })
 }
+
+# TODO
+1. 百度统计
+2. Google Analytics
+
+// x.length > 2是为了去除字母长度为1或2, 两个字母的单词基本没有, 而且刚好去除a, an
+
+
+没什么卵用, 还是一个空格
+let textnode = document.createElement(word);
+textnode.innerHTML = word;
+contrast.appendChild(textnode);

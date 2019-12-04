@@ -40,23 +40,50 @@ oxford_level, cefr_level, word, part_of_speech
 
 如何清洗PDF数据
 注意：
-1) bank (money) n 以及 match (contest/correspond) n., v
-解决方案：直接分为 word 和 description
+0) 标题文字要处理
+实例：© Oxford University Press...
+解决方案：手动 + 自动（正则匹配）
 
-2) age n. A1, v. B1
-解决方案：by cefr level来整合
+1) 单词后面跟括号表示注释的
+实例：bank (money) n 以及 match (contest/correspond) n., v
+解决方案：后面的解释说明文字不要了，利用正则来实现。但是，在解决这个问题之前，必须先解决"单词后面的注释文字太长，导致换行"的问题
 
-3) PDF文档中的数字, 例如
-close1 v.
-用替换剔除掉
-
-4) PDF中换行，如：
+2) 单词后面的注释文字太长，导致换行
+实例：
 light (from the sun/a lamp) n.,
  adj
-使用json handle去检测，若报错那肯定有问题，然后修复问题
-人眼尽量去除，如果不除尽也不会影响，因为字典本身就没有这个单词
+解决方案：
 
-5) 居然还有短横线的
+1. 针对形如
+light (from the sun/a lamp) n.,
+adj. A1, v. A2
+
+① 打开Sublime Text，通过Cmd+F，正则匹配 ^[a-zA-Z0-9-]+ .* 然后 Find All，Cmd+X剪切
+② Cmd+Option+F，[\n]{2,} 替换为 \n，可以看到剔除了哪些
+③ 新开一个Sublime Text 页面，粘贴
+
+2. 排序，然后通过具比对工，然后肉眼排除
+
+3. 如果不除尽也不会影响，因为字典本身就没有这个单词。（更新：必应也起到了过滤的作用！因为查询这个单词，是没有单词变形的）
+
+总结如下：
+[oxford 3000]
+a, an indefinite article A1
+double adj., det., pron., v. A2,
+light (from the sun/a lamp) n.,
+like (find sb/sth pleasant) v. A1,
+match (contest/correspond) n.,
+o’clock adv. A1
+outside adv. A1, prep., noun., adj.
+
+[oxford 5000]
+没发现。应该不用管了，不是说了吗，必应也是个过滤器呀
+
+3) 单词后面跟数字
+实例：close1 v.
+解决方案：正则匹配的时候[a-zA-Z-]即只匹配字母和连字符
+
+4) 有连字符的单词
 T-shirt
 long-term
 old-fashioned
@@ -65,12 +92,21 @@ make-up
 part-time
 short-term
 so-called
-怎么处理，正则替换 ^([a-zA-Z-])(.*)$ 替换为 "word": "$1", "description": "$2"
+解决方案：正则匹配 ^([a-zA-Z-])(.*)$ 替换为 "word": "$1", "description": "$2"
 
-6) second在等级A1中算了两次，还紧挨着
+5) second在等级A1中算了两次，还紧挨着
+实例：
 second1 (next after the first) det./
  number
 second1 (unit of time) n
+解决方案：sublime 去重
+
+6) 一个单词同时属于两个等级
+实例：
+age n. A1, v. B1，即既属于A1级，又属于B1级
+解决方案：通过增加字段来处理
+
+
 (TODO 导入到WebStorm中会自动检测重复项, 暂未处理)
 
 TODO 添加words to be ignored
@@ -97,6 +133,10 @@ PDF阅读器：Foxit
 3. 预处理掉标题等等
 4. 正则替换：^([a-zA-Z-]+)(.*)$ 替换为 $1
 5. 小写化
+
+爬取到必应的数据，先保存原始的数据
+
+
 
 结束语:
 因为原数据上有 a, an这样的问题, 所以我怀疑还有其他一些问题要处理。所以, 这个程序当个有力的辅助功能吧

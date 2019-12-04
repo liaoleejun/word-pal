@@ -54,16 +54,18 @@ document.getElementById("start").addEventListener("click", function(){
                                     let textnode = document.createTextNode(word);
                                     contrast.appendChild(textnode);
                                 } else {
-                                    let span = document.createElement("span");
-                                    span.innerText = word;
-                                    span.classList.add("not-in-list");
-                                    contrast.appendChild(span);
                                     if (unmatched[word]) {
                                         unmatched[word]++;
+                                        let textnode = document.createTextNode(word);
+                                        contrast.appendChild(textnode);
                                     } else {
                                         unmatched[word] = 1;
+                                        let span = document.createElement("span");
+                                        span.innerText = word;
+                                        span.classList.add("not-in-list");
+                                        contrast.appendChild(span);
+                                        notInList.innerHTML = Object.keys(unmatched).sort().join(", ");
                                     }
-                                    notInList.innerHTML = Object.keys(unmatched).sort().join(", ");
                                 }
                             } else {
                                 let textnode = document.createTextNode(word);

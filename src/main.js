@@ -25,24 +25,24 @@ document.getElementById("start").addEventListener("click", function(){
     if(!text.trim()) {return;}
 
     let lines = text.match(/[\n]+|[^\n]+/g);
-    for (let line of lines) {
-        if (line.match(/\n/i)) {
-            for (let i = 0; i < line.match(/\n/g).length; i++) {
-                let br = document.createElement("br");
-                contrast.appendChild(br);
-            }
-        } else {
-            let may_words = line.match(/([\s]+)|([^\s]+)/g);
-            for (let may_word of may_words) {
-                if (may_word.match(/\s/i)) {
-                    let elem = document.createElement("span");
-                    elem.innerHTML = "&nbsp;";
-                    contrast.appendChild(elem);
-                } else {
-                    let words = may_word.match(/([a-zA-Z]+)|([^a-zA-Z]+)/g);
-                    for (let word of words) {
-                        if (word.match(/[a-zA-Z]+/g)) {
-                            (async function () {
+    (async function () {
+        for (let line of lines) {
+            if (line.match(/\n/i)) {
+                for (let i = 0; i < line.match(/\n/g).length; i++) {
+                    let br = document.createElement("br");
+                    contrast.appendChild(br);
+                }
+            } else {
+                let may_words = line.match(/([\s]+)|([^\s]+)/g);
+                for (let may_word of may_words) {
+                    if (may_word.match(/\s/i)) {
+                        let elem = document.createElement("span");
+                        elem.innerHTML = "&nbsp;";
+                        contrast.appendChild(elem);
+                    } else {
+                        let words = may_word.match(/([a-zA-Z]+)|([^a-zA-Z]+)/g);
+                        for (let word of words) {
+                            if (word.match(/[a-zA-Z]+/g)) {
                                 let isInList = await checkWordList(word);
                                 if (isInList) {
                                     let textnode = document.createTextNode(word);
@@ -53,16 +53,19 @@ document.getElementById("start").addEventListener("click", function(){
                                     span.classList.add("not-in-list");
                                     contrast.appendChild(span);
                                 }
-                            })();
-                        } else {
-                            let textnode = document.createTextNode(word);
-                            contrast.appendChild(textnode);
+                            } else {
+                                let textnode = document.createTextNode(word);
+                                contrast.appendChild(textnode);
+                            }
                         }
                     }
                 }
             }
         }
-    }
+    })();
+
+
+
 
     // Not in list
     // let notInList = document.getElementById("not-in-list");

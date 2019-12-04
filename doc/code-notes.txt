@@ -1,0 +1,10 @@
+# 批量插入到 IndexedDB
+
+function addMultiple(data) {
+    const objStore = "wordlist";
+    const tx = db.transaction([objStore], "readwrite");
+
+    data.forEach(value => {
+        let request = tx.objectStore(objStore).add(value);
+    })
+}

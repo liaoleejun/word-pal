@@ -10,8 +10,8 @@ reqOpenDB.onsuccess = function (e) {
 // 输出 not in list
 // 输出 contrast
 //
-// text ----> line ----> may_word ----------> word
-//       \n         \s             [a-zA-Z]
+// text ----> lines ----> may_words ----------> words
+//       \n          \s              [a-zA-Z]
 //
 //
 document.getElementById("start").addEventListener("click", function(){
@@ -19,6 +19,7 @@ document.getElementById("start").addEventListener("click", function(){
     if (contrast) {contrast.parentNode.removeChild(contrast);}
     contrast = document.createElement("div");
     contrast.id = "contrast";
+    document.body.appendChild(contrast);
 
     let text = document.getElementById("input").value;
     if(!text.trim()) {return;}
@@ -34,14 +35,29 @@ document.getElementById("start").addEventListener("click", function(){
             let may_words = line.match(/([\s]+)|([^\s]+)/g);
             for (let may_word of may_words) {
                 if (may_word.match(/\s/i)) {
-                    let textnode = document.createTextNode(may_word);
-                    textnode.innerHTML = may_word;
-                    contrast.appendChild(textnode);
+                    let elem = document.createElement("span");
+                    elem.innerHTML = "&nbsp;";
+                    contrast.appendChild(elem);
                 } else {
-                    let word = may_word.match(/([a-zA-Z]+)|([^a-zA-Z]+)/g);
-                    for (let true_word of word) {
-                        let textnode = document.createTextNode(true_word);
-                        contrast.appendChild(textnode);
+                    let words = may_word.match(/([a-zA-Z]+)|([^a-zA-Z]+)/g);
+                    for (let word of words) {
+                        if (word.match(/[a-zA-Z]+/g)) {
+                            (async function () {
+                                let isInList = await checkWordList(word);
+                                if (isInList) {
+                                    let textnode = document.createTextNode(word);
+                                    contrast.appendChild(textnode);
+                                } else {
+                                    let span = document.createElement("span");
+                                    span.innerText = word;
+                                    span.classList.add("not-in-list");
+                                    contrast.appendChild(span);
+                                }
+                            })();
+                        } else {
+                            let textnode = document.createTextNode(word);
+                            contrast.appendChild(textnode);
+                        }
                     }
                 }
             }
@@ -57,7 +73,7 @@ document.getElementById("start").addEventListener("click", function(){
     // document.body.appendChild(notInList);
 
     // Contrast
-    document.body.appendChild(contrast);
+    // document.body.appendChild(contrast);
 
 });
 
@@ -72,6 +88,8 @@ function getRadioValueByName(name) {
 
 function checkWordList(x) {
     return new Promise(function (resolve) {
+        x = x.toLowerCase();
+
         // 找到radio所指定的单词列表等级 ["oxford_3000", "oxford_5000"]
         let select_level = getRadioValueByName("std_level");
 

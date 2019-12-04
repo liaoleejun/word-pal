@@ -12,9 +12,15 @@ reqOpenDB.onsuccess = function (e) {
 //
 // text ----> lines ----> may_words ----------> words
 //       \n          \s              [a-zA-Z]
-//
-//
 document.getElementById("start").addEventListener("click", function(){
+    // Not in list
+    let notInList = document.getElementById("not-in-list");
+    if (notInList) {notInList.parentNode.removeChild(notInList);}
+    notInList = document.createElement("div");
+    notInList.id = "not-in-list";
+    document.body.appendChild(notInList);
+
+    // 原文对照并突出显示 Not in list
     let contrast = document.getElementById("contrast");
     if (contrast) {contrast.parentNode.removeChild(contrast);}
     contrast = document.createElement("div");
@@ -25,6 +31,7 @@ document.getElementById("start").addEventListener("click", function(){
     if(!text.trim()) {return;}
 
     let lines = text.match(/[\n]+|[^\n]+/g);
+    let unmatched = {};
     (async function () {
         for (let line of lines) {
             if (line.match(/\n/i)) {
@@ -41,7 +48,7 @@ document.getElementById("start").addEventListener("click", function(){
                     } else {
                         let words = may_word.match(/([a-zA-Z]+)|([^a-zA-Z]+)/g);
                         for (let word of words) {
-                            if (word.match(/[a-zA-Z]+/g)) {
+                            if (word.match(/[a-zA-Z]+/g) && word.length > 2) {
                                 let isInList = await checkWordList(word);
                                 if (isInList) {
                                     let textnode = document.createTextNode(word);
@@ -51,6 +58,12 @@ document.getElementById("start").addEventListener("click", function(){
                                     span.innerText = word;
                                     span.classList.add("not-in-list");
                                     contrast.appendChild(span);
+                                    if (unmatched[word]) {
+                                        unmatched[word]++;
+                                    } else {
+                                        unmatched[word] = 1;
+                                    }
+                                    notInList.innerHTML = Object.keys(unmatched).sort().join(", ");
                                 }
                             } else {
                                 let textnode = document.createTextNode(word);
@@ -62,21 +75,6 @@ document.getElementById("start").addEventListener("click", function(){
             }
         }
     })();
-
-
-
-
-    // Not in list
-    // let notInList = document.getElementById("not-in-list");
-    // if (notInList) {notInList.parentNode.removeChild(notInList);}
-    // notInList = document.createElement("div");
-    // notInList.id = "not-in-list";
-    // notInList.innerHTML = Object.keys(notInList).sort().join(", ");
-    // document.body.appendChild(notInList);
-
-    // Contrast
-    // document.body.appendChild(contrast);
-
 });
 
 function getRadioValueByName(name) {

@@ -32,11 +32,11 @@ a {
     color: #aaa;
 }
 
-#result > span {
-    color: red;
-}
-
-#unmatched {
+#not-in-list {
     background-color: #E0E0E0;
     margin: 10px auto;
+}
+
+#contrast > span {
+    color: red;
 }

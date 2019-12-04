@@ -1,12 +1,13 @@
 const DB_NAME = "WordPal";
 const DB_VERSION = 1;
 const STORE_NAME = "wordlist";
+let db;
 
 function setup() {
     let reqOpenDB = window.indexedDB.open(DB_NAME, DB_VERSION);
 
     reqOpenDB.onsuccess = function (e) {
-        let db = e.target.result;
+        db = e.target.result;
         // db.onerror = function(e) {
         //     alert("Sorry, an unforseen error was thrown.");
         //     console.log("***ERROR***");

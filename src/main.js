@@ -1,88 +1,66 @@
-// 百度统计
-// Google Analytics
+let reqOpenDB = window.indexedDB.open(DB_NAME, DB_VERSION);
+let store = null;
 
-document.getElementById("start").addEventListener("click", function(){
-    let result = document.getElementById("result");
-    if (result) {
-        result.parentNode.removeChild(result);
+reqOpenDB.onsuccess = function (e) {
+    if (store === null) {
+        store = e.target.result.transaction([STORE_NAME], "readonly").objectStore(STORE_NAME);
     }
-    result = document.createElement("div");
-    result.id = "result";
+};
 
-    /*
-     * text ---换行\n--->
-     *    若为换行符, 则原样输出, 否则进行进一步判断
-     * line ---空白符\s--->
-     *    若为空白符, 则原样输出, 否则进行进一步判断
-     * word ---全字母a-zA-Z--->
-     *    若false-word则原样输出
-     *    若true-word且匹配则原样输出
-     *    若true-word且未匹配到, 则加span输出
-     */
+// 输出 not in list
+// 输出 contrast
+//
+// text ----> line ----> may_word ----------> word
+//       \n         \s             [a-zA-Z]
+//
+//
+document.getElementById("start").addEventListener("click", function(){
+    let contrast = document.getElementById("contrast");
+    if (contrast) {contrast.parentNode.removeChild(contrast);}
+    contrast = document.createElement("div");
+    contrast.id = "contrast";
+
     let text = document.getElementById("input").value;
-    if (!text.trim()) {return;}
-    let lines = text.match(/([\n]+)|([^\n]+)/g);
-    let unmatched = {};
+    if(!text.trim()) {return;}
+
+    let lines = text.match(/[\n]+|[^\n]+/g);
     for (let line of lines) {
         if (line.match(/\n/i)) {
             for (let i = 0; i < line.match(/\n/g).length; i++) {
-                let elem = document.createElement("br");
-                result.appendChild(elem);
+                let br = document.createElement("br");
+                contrast.appendChild(br);
             }
-            continue;
-        }
-
-        let words = line.trim().match(/([\s]+)|([^\s]+)/g);
-        for (let word of words) {
-            if (word.match(/[\s]/i)) {
-                let text = document.createTextNode(word);
-                result.appendChild(text);
-                continue;
-            }
-
-            word = word.match(/([a-zA-Z]+)|([^a-zA-Z]+)/g);
-            for (let x of word) {
-                /*
-                 * 匹配
-                 * x.length > 2是为了去除字母长度为1或2, 因为去除a, an
-                 */
-                if (x.match(/[a-z]/i) && x.length > 2) {
-                    // TODO 1. data.js完全小写化 2. wordList[x.toLowerCase()]
-                    if (matchWordList(x)) {
-                        let t = document.createTextNode(x);
-                        result.appendChild(t);
-                    } else {
-                        let span = document.createElement("span");
-                        span.innerText = x;
-                        result.appendChild(span);
-                        if (unmatched.hasOwnProperty(x)) {
-                            unmatched[x] = unmatched[x] + 1;
-                        } else {
-                            unmatched[x] = 1;
-                        }
-                    }
+        } else {
+            let may_words = line.match(/([\s]+)|([^\s]+)/g);
+            for (let may_word of may_words) {
+                if (may_word.match(/\s/i)) {
+                    let textnode = document.createTextNode(may_word);
+                    textnode.innerHTML = may_word;
+                    contrast.appendChild(textnode);
                 } else {
-                    let t = document.createTextNode(x);
-                    result.appendChild(t);
+                    let word = may_word.match(/([a-zA-Z]+)|([^a-zA-Z]+)/g);
+                    for (let true_word of word) {
+                        let textnode = document.createTextNode(true_word);
+                        contrast.appendChild(textnode);
+                    }
                 }
             }
         }
     }
 
-    let div = document.getElementById("unmatched");
-    if (div) {
-        div.parentNode.removeChild(div);
-    }
-    div = document.createElement("div");
-    div.id = "unmatched";
-    div.innerHTML = Object.keys(unmatched).sort().join(", ");
+    // Not in list
+    // let notInList = document.getElementById("not-in-list");
+    // if (notInList) {notInList.parentNode.removeChild(notInList);}
+    // notInList = document.createElement("div");
+    // notInList.id = "not-in-list";
+    // notInList.innerHTML = Object.keys(notInList).sort().join(", ");
+    // document.body.appendChild(notInList);
 
-    document.body.appendChild(div);
-    document.body.appendChild(result);
+    // Contrast
+    document.body.appendChild(contrast);
 
 });
 
-// https://stackoverflow.com/questions/9618504/how-to-get-the-selected-radio-button-s-value
 function getRadioValueByName(name) {
     let radios = document.getElementsByName(name);
     for (let i = 0, length = radios.length; i < length; i++) {
@@ -92,31 +70,27 @@ function getRadioValueByName(name) {
     }
 }
 
-function matchWordList(x) {
-    // 找到radio所指定的单词列表等级 ["3000", "5000", "a1", "a2", "b1", "b2", "c1"]
-    let level = getRadioValueByName("std_level").split("_")[1];
-    let arr = [];
-    if (level === "3000") {
-        arr = [a1_3000, a2_3000, b1_3000, b2_3000];
-    } else if (level === "5000") {
-        arr = [a1_3000, a2_3000, b1_3000, b2_3000, b2_5000, c1_5000];
-    } else if (level === "a1") {
-        arr = [a1_3000];
-    } else if (level === "a2") {
-        arr = [a1_3000, a2_3000];
-    } else if (level === "b1") {
-        arr = [a1_3000, a2_3000, b1_3000];
-    } else if (level === "b2") {
-        arr = [a1_3000, a2_3000, b1_3000, b2_3000, b2_5000];
-    } else {
-        arr = [a1_3000, a2_3000, b1_3000, b2_3000, b2_5000, c1_5000];
-    }
+function checkWordList(x) {
+    return new Promise(function (resolve) {
+        // 找到radio所指定的单词列表等级 ["oxford_3000", "oxford_5000"]
+        let select_level = getRadioValueByName("std_level");
 
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i].hasOwnProperty(x.toLowerCase())) {
-            return true
-        }
-    }
-
-    return false;
+        let store = db.transaction([STORE_NAME], "readonly").objectStore(STORE_NAME);
+        let reqGet = store.get(x);
+        reqGet.onsuccess = function (e) {
+            let result = e.target.result;
+            // 不存在，返回 false
+            // 存在，select_level = oxford_3000 而且存在的数据的 level = oxford_5000，返回 false
+            // 存在，select_level = oxford_3000 而且存在的数据的 level = oxford_3000，返回 true
+            // 存在，select_level = oxford_5000，返回 true
+            if (result === undefined || (select_level === "oxford_3000" && result.level === "oxford_5000" )) {
+                resolve(false);
+            } else {
+                resolve(true);
+            }
+        };
+        reqGet.onerror = function (e) {
+            console.log(e);
+        };
+    });
 }

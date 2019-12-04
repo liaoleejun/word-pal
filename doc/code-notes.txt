@@ -20,3 +20,11 @@ function addMultiple(data) {
 let textnode = document.createElement(word);
 textnode.innerHTML = word;
 contrast.appendChild(textnode);
+
+it's
+he'd
+that's
+we've
+I'm
+I'll
+don't

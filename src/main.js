@@ -36,9 +36,8 @@ document.getElementById("start").addEventListener("click", function(){
                 let may_words = line.match(/([\s]+)|([^\s]+)/g);
                 for (let may_word of may_words) {
                     if (may_word.match(/\s/i)) {
-                        let elem = document.createElement("span");
-                        elem.innerHTML = "&nbsp;";
-                        contrast.appendChild(elem);
+                        let textnode = document.createTextNode(may_word)
+                        contrast.appendChild(textnode);
                     } else {
                         let words = may_word.match(/([a-zA-Z]+)|([^a-zA-Z]+)/g);
                         for (let word of words) {

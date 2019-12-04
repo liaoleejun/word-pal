@@ -37,6 +37,18 @@ a {
     margin: 10px auto;
 }
 
+#contrast {
+    color: #FFFFFF;
+}
+
+#contrast::selection {
+    background: red; /* WebKit/Blink Browsers */
+}
+
 #contrast > span.not-in-list {
     color: red;
+}
+
+#contrast > span.not-in-list::selection {
+    color: #ACCEF7;
 }

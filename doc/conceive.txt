@@ -109,6 +109,8 @@ second1 (unit of time) n
 age n. A1, v. B1，即既属于A1级，又属于B1级
 解决方案：通过增加字段来处理
 
+重要：
+在合并oxford 3000、oxford 5000、oxford 3000 variant、oxford 5000 variant并修改为json格式时，要先去重
 
 (TODO 导入到WebStorm中会自动检测重复项, 暂未处理)
 

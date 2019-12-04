@@ -12,9 +12,25 @@ function setup() {
         //     console.log("***ERROR***");
         //     console.dir(e.target);
         // };
-        let store = db.transaction([STORE_NAME], "readwrite").objectStore(STORE_NAME);
-        for (let i = 0; i < wordlist.length; i++) {
-            store.add(wordlist[i]);
+
+        db.transaction([STORE_NAME], "readonly").objectStore(STORE_NAME).count().onsuccess = function(e) {
+            let count = e.target.result;
+            if (count === 0) {
+                let store = db.transaction([STORE_NAME], "readwrite").objectStore(STORE_NAME);
+                for (let i = 0; i < wordlist.length; i++) {
+                    let reqAdd = store.add(wordlist[i]);
+                    reqAdd.onsuccess = function () {
+                        console.log("success");
+                    };
+                    reqAdd.onerror = function (e) {
+                        console.log(e);
+                        console.log(wordlist[i]);
+                    };
+                }
+            } else {
+                console.log("Object store already exists, no data initialization is performed.")
+            }
+
         }
     };
 

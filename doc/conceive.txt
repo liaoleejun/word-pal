@@ -101,7 +101,10 @@ second1 (next after the first) det./
 second1 (unit of time) n
 解决方案：sublime 去重
 
-6) 一个单词同时属于两个等级
+6) 单词有大写有小写
+解决方案：小写化
+
+7) 一个单词同时属于两个等级
 实例：
 age n. A1, v. B1，即既属于A1级，又属于B1级
 解决方案：通过增加字段来处理

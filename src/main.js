@@ -64,7 +64,7 @@ document.getElementById("start").addEventListener("click", function(){
                                         span.innerText = word;
                                         span.classList.add("not-in-list");
                                         contrast.appendChild(span);
-                                        notInList.innerHTML = Object.keys(unmatched).sort().join(", ");
+                                        notInList.innerHTML = Object.keys(unmatched).join(", ");
                                     }
                                 }
                             } else {

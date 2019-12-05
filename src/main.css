@@ -38,11 +38,11 @@ a {
 }
 
 #contrast {
-    color: #FFFFFF;
+    color: #F9F9F9;
 }
 
 #contrast::selection {
-    color: green; /* WebKit/Blink Browsers */
+    color: #333; /* WebKit/Blink Browsers */
     background-color: #ACCEF7;
 }
 

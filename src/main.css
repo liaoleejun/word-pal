@@ -43,6 +43,7 @@ a {
 
 #contrast::selection {
     color: green; /* WebKit/Blink Browsers */
+    background-color: #ACCEF7;
 }
 
 #contrast > span.not-in-list {
@@ -50,5 +51,5 @@ a {
 }
 
 #contrast > span.not-in-list::selection {
-    background-color: transparent;
+    background-color: #ACCEF7;
 }

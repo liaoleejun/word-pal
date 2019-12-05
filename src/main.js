@@ -33,7 +33,7 @@ document.getElementById("start").addEventListener("click", function(){
     let lines = text.match(/[\n]+|[^\n]+/g);
     let unmatched = {};
     (async function () {
-        for (let line of lines) {
+        for (let [idx, line] of lines.entries()) {
             if (line.match(/\n/i)) {
                 for (let i = 0; i < line.match(/\n/g).length; i++) {
                     let br = document.createElement("br");
@@ -74,6 +74,12 @@ document.getElementById("start").addEventListener("click", function(){
                         }
                     }
                 }
+            }
+            // 当到达最后一行时，在id="not-in-list"后面append统计数据
+            if (idx === lines.length - 1) {
+                let elem = document.createElement("div");
+                elem.innerText = `Stats: ${Object.keys(unmatched).length} words`;
+                notInList.parentNode.insertBefore(elem, notInList.nextSibling);
             }
         }
     })();
